@@ -12,6 +12,7 @@ body {
     padding: 32px 20px;
 }
 
+/* ===== Шапка ===== */
 .app header {
     text-align: center;
     padding: 24px 16px;
@@ -21,10 +22,12 @@ body {
     box-shadow: 0 4px 12px rgba(94, 58, 148, 0.3);
 }
 
-.app header h1 {
+.app header .app-title {
     margin: 0 0 8px;
     font-size: 2rem;
+    font-weight: 700;
     letter-spacing: 0.5px;
+    color: #ffffff;
 }
 
 .app header p {
@@ -33,42 +36,24 @@ body {
     font-size: 1rem;
 }
 
-.app section {
-    margin-top: 32px;
-    padding: 20px;
-    border-radius: 12px;
-    background: #ffffff;
-    border-left: 5px solid #8a5fc7;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-.app section h2 {
-    margin-top: 0;
-    color: #5e3a94;
+header nav {
+    justify-content: center;
+    margin-top: 16px;
 }
-
-.app section p {
-    color: #666666;
-}
-
-nav { display: flex; flex-wrap: wrap; gap: 16px; }
-nav a.active { font-weight: bold; }
-nav a:focus-visible,
-.task-card a:focus-visible { outline: 2px solid #1a73e8; outline-offset: 2px; }
-.task-list { display: grid; gap: 16px; margin-top: 24px; }
-.task-card { border: 1px solid #ccc; padding: 16px; overflow-wrap: anywhere; }
-.task-card h2 { margin-top: 0; }
-
-@media (min-width: 760px) {
-    .task-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
 
 header nav a {
     color: #fff;
     text-decoration: none;
-    padding: 4px 10px;
-    border-radius: 6px;
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    transition: background 0.15s;
 }
 
 header nav a:hover {
@@ -82,4 +67,326 @@ header nav a.active {
 
 header nav a:focus-visible {
     outline: 2px solid #fff;
-        outline-offset: 2px;} /*цвет для задачи и создать*/
+    outline-offset: 2px;
+}
+
+/* ===== Секции страниц ===== */
+.app section {
+    margin-top: 32px;
+    padding: 20px;
+    border-radius: 12px;
+    background: #ffffff;
+    border-left: 5px solid #8a5fc7;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.app section h1 {
+    margin-top: 0;
+    color: #5e3a94;
+}
+
+.app section h2 {
+    margin-top: 0;
+    color: #5e3a94;
+}
+
+.app section p {
+    color: #666666;
+}
+
+.app section a:not(.btn) {
+    color: #5e3a94;
+}
+
+/* ===== Пояснение о временном хранении ===== */
+.storage-note {
+    margin-top: 24px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid #f0d58a;
+    background: #fff8e1;
+    color: #7a5b00;
+    font-size: 0.9rem;
+}
+
+/* ===== Кнопки ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    border: 1px solid #c9b6e8;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #5e3a94;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.btn:hover {
+    background: #f3eefc;
+    border-color: #8a5fc7;
+    box-shadow: 0 3px 8px rgba(94, 58, 148, 0.18);
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.btn:focus-visible {
+    outline: 3px solid rgba(138, 95, 199, 0.5);
+    outline-offset: 2px;
+}
+
+.app section a.btn-primary,
+.btn-primary {
+    background: linear-gradient(135deg, #8a5fc7 0%, #5e3a94 100%);
+    border-color: #5e3a94;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(94, 58, 148, 0.35);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #7a4fb8 0%, #4f2f82 100%);
+    border-color: #4f2f82;
+    box-shadow: 0 5px 12px rgba(94, 58, 148, 0.45);
+}
+
+.btn-danger {
+    border-color: #e3a3a3;
+    color: #c0392b;
+}
+
+.btn-danger:hover {
+    background: #fdecea;
+    border-color: #c0392b;
+    box-shadow: 0 3px 8px rgba(192, 57, 43, 0.2);
+}
+
+/* ===== Шапка страницы ===== */
+.page-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.page-header h1 {
+    margin: 0;
+}
+
+/* ===== Фильтр ===== */
+.filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: #f7f3fd;
+}
+
+.filter-bar label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5e3a94;
+}
+
+/* ===== Пустые состояния ===== */
+.app .empty-state {
+    margin-top: 24px;
+    padding: 28px 16px;
+    border: 1px dashed #c9b6e8;
+    border-radius: 12px;
+    background: #faf7ff;
+    color: #7a6a94;
+    text-align: center;
+}
+
+/* ===== Форма ===== */
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 560px;
+    text-align: left;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5e3a94;
+}
+
+.field input,
+.field select,
+.field textarea,
+.filter-bar select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #c9b6e8;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #2b2140;
+    font: inherit;
+}
+
+.filter-bar select {
+    width: auto;
+}
+
+.field textarea {
+    min-height: 96px;
+    resize: vertical;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+.filter-bar select:focus {
+    outline: none;
+    border-color: #8a5fc7;
+    box-shadow: 0 0 0 3px rgba(138, 95, 199, 0.25);
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.app .form-error {
+    margin: 0;
+    padding: 10px 14px;
+    border-left: 4px solid #c0392b;
+    border-radius: 6px;
+    background: #fdecea;
+    color: #a12a1f;
+    font-size: 0.9rem;
+}
+
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ===== Страница подробностей ===== */
+.task-details-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 20px;
+    align-items: center;
+    margin: 16px 0;
+    padding: 16px;
+    border-radius: 10px;
+    background: #f7f3fd;
+}
+
+.task-details-meta dt {
+    color: #7a6a94;
+}
+
+.task-details-meta dd {
+    margin: 0;
+    color: #2b2140;
+}
+
+.task-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ===== Список и карточки ===== */
+.task-list {
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.task-card {
+    border: 1px solid #e0d4f5;
+    border-radius: 12px;
+    background: #faf7ff;
+    padding: 16px;
+    overflow-wrap: anywhere;
+    transition: box-shadow 0.15s, transform 0.15s;
+}
+
+.task-card:hover {
+    box-shadow: 0 4px 12px rgba(94, 58, 148, 0.15);
+    transform: translateY(-2px);
+}
+
+.task-card h2 {
+    margin-top: 0;
+}
+
+nav a:focus-visible,
+.task-card a:focus-visible {
+    outline: 2px solid #8a5fc7;
+    outline-offset: 2px;
+}
+
+/* ===== Бейджи ===== */
+.badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 12px 0 8px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.badge-status-todo { background: #e8e4f0; color: #5a4d73; }
+.badge-status-in_progress { background: #fff1cc; color: #8a6100; }
+.badge-status-done { background: #d9f2e0; color: #1f7a3d; }
+
+.badge-priority-low { background: #e3f0fb; color: #1d5f94; }
+.badge-priority-medium { background: #fde8d4; color: #a65a12; }
+.badge-priority-high { background: #fbdcdc; color: #b02a2a; }
+
+.badge-tag { background: #f1e9fb; color: #6b45a3; }
+
+.app .task-card-date {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #7a6a94;
+}
+
+/* ===== Адаптив ===== */
+@media (min-width: 760px) {
+    .task-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .field-row {
+        grid-template-columns: 1fr;
+    }
+}

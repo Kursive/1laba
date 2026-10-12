@@ -10,3 +10,5 @@ export type Task = {
     priority: TaskPriority
     tag: string
 }
+
+export type TaskDraft = Omit<Task, 'id'>

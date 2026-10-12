@@ -14,6 +14,9 @@ export function AppLayout() {
                 </nav>
             </header>
             <main>
+                <div className="storage-note" role="note">
+                    Данные хранятся только в памяти: после обновления страницы вернутся демонстрационные задачи.
+                </div>
                 <Outlet />
             </main>
         </div>

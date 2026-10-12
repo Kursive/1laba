@@ -22,9 +22,16 @@ export function TaskCard({ task }: TaskCardProps) {
                 <Link to={`/tasks/${task.id}`}>{task.title}</Link>
             </h2>
             <p>{task.description}</p>
-            <p>Статус: {statusLabels[task.status]}</p>
-            <p>Приоритет: {priorityLabels[task.priority]}</p>
-            <p>Срок: {task.dueDate}</p>
+            <div className="badges">
+                <span className={`badge badge-status-${task.status}`}>
+                    {statusLabels[task.status]}
+                </span>
+                <span className={`badge badge-priority-${task.priority}`}>
+                    {priorityLabels[task.priority]}
+                </span>
+                {task.tag && <span className="badge badge-tag">#{task.tag}</span>}
+            </div>
+            <p className="task-card-date">Срок: {task.dueDate}</p>
         </article>
     )
 }
