@@ -390,3 +390,37 @@ nav a:focus-visible,
         grid-template-columns: 1fr;
     }
 }
+/* ===== Состояние загрузки справочника ===== */
+.app .form-status {
+    margin: 4px 0 0;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: #f7f3fd;
+    color: #5e3a94;
+    font-size: 0.9rem;
+}
+
+.app .form-status p {
+    margin: 0 0 8px;
+    color: inherit;
+}
+
+.app .form-status p:last-child {
+    margin-bottom: 0;
+}
+
+.app .form-status-error {
+    background: #fdecea;
+    color: #a12a1f;
+}
+
+.field select:disabled,
+.btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}

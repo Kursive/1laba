@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import type { TaskDraft } from '../types/task'
+import { useTags } from '../hooks/useTags'
 import { priorityLabels, statusLabels } from './TaskCard'
 
 type TaskFormProps = {
@@ -12,9 +13,19 @@ type TaskFormProps = {
 export function TaskForm(props: TaskFormProps) {
     const [draft, setDraft] = useState<TaskDraft>(() => ({ ...props.initialValues }))
     const [error, setError] = useState('')
+    const { load, retry } = useTags()
+
+    const tags = load.status === 'success' ? load.data : []
+    const selectedTagExists = tags.some((tag) => tag.id === draft.tag)
+    const canSave = load.status === 'success' && selectedTagExists
 
     function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        if (!canSave) {
+            setError('Дождитесь справочника и выберите доступный тег.')
+            return
+        }
 
         const title = draft.title.trim()
         if (title.length < 3 || title.length > 100) {
@@ -55,26 +66,65 @@ export function TaskForm(props: TaskFormProps) {
                 />
             </div>
 
-            <div className="field-row">
-                <div className="field">
-                    <label htmlFor="task-date">Срок</label>
-                    <input
-                        id="task-date"
-                        type="date"
-                        value={draft.dueDate}
-                        required
-                        onChange={(e) => setDraft({ ...draft, dueDate: e.target.value })}
-                    />
-                </div>
+            <div className="field">
+                <label htmlFor="task-date">Срок</label>
+                <input
+                    id="task-date"
+                    type="date"
+                    value={draft.dueDate}
+                    required
+                    onChange={(e) => setDraft({ ...draft, dueDate: e.target.value })}
+                />
+            </div>
 
-                <div className="field">
-                    <label htmlFor="task-tag">Тег</label>
-                    <input
-                        id="task-tag"
-                        value={draft.tag}
-                        onChange={(e) => setDraft({ ...draft, tag: e.target.value })}
-                    />
-                </div>
+            <div className="field">
+                <label htmlFor="task-tag">Тег</label>
+                <select
+                    id="task-tag"
+                    value={draft.tag}
+                    required
+                    disabled={load.status !== 'success' || tags.length === 0}
+                    onChange={(e) => setDraft({ ...draft, tag: e.target.value })}
+                >
+                    <option value="">Выберите тег</option>
+                    {draft.tag !== '' && !selectedTagExists && (
+                        <option value={draft.tag} disabled>
+                            Текущий код: {draft.tag} — выберите доступный тег
+                        </option>
+                    )}
+                    {tags.map((tag) => (
+                        <option key={tag.id} value={tag.id}>{tag.name}</option>
+                    ))}
+                </select>
+
+                {load.status === 'loading' && (
+                    <p className="form-status" role="status">Загружаем теги…</p>
+                )}
+
+                {load.status === 'error' && (
+                    <div className="form-status form-status-error">
+                        <p role="alert">{load.message}</p>
+                        <button type="button" className="btn" onClick={retry}>
+                            Повторить
+                        </button>
+                    </div>
+                )}
+
+                {load.status === 'success' && tags.length === 0 && (
+                    <div className="form-status">
+                        <p role="status">Тегов пока нет. Сохранение недоступно.</p>
+                        <button type="button" className="btn" onClick={retry}>
+                            Повторить
+                        </button>
+                    </div>
+                )}
+
+                {load.status === 'success' && tags.length > 0 &&
+                    draft.tag !== '' && !selectedTagExists && (
+                        <p className="form-status" role="status">
+                            Прежний тег не найден в справочнике. Выберите доступный.
+                        </p>
+                    )}
             </div>
 
             <div className="field-row">
@@ -118,8 +168,12 @@ export function TaskForm(props: TaskFormProps) {
             {error && <p className="form-error" role="alert">{error}</p>}
 
             <div className="form-actions">
-                <button type="submit" className="btn btn-primary">Сохранить</button>
-                <button type="button" className="btn" onClick={props.onCancel}>Отмена</button>
+                <button type="submit" className="btn btn-primary" disabled={!canSave}>
+                    Сохранить
+                </button>
+                <button type="button" className="btn" onClick={props.onCancel}>
+                    Отмена
+                </button>
             </div>
         </form>
     )
