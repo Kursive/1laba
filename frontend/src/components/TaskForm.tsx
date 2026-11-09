@@ -162,6 +162,13 @@ export function TaskForm(props: TaskFormProps) {
                         <option value="medium">{priorityLabels.medium}</option>
                         <option value="high">{priorityLabels.high}</option>
                     </select>
+
+                    {load.status === 'success' && tags.length > 0 && (
+                        <button type="button" className="btn" onClick={retry}>
+                            Обновить справочник
+                        </button>
+                    )}
+
                 </div>
             </div>
 
